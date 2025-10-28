@@ -1,0 +1,47 @@
+#include <stdio.h> 
+#include <string.h> 
+#include <conio.h> 
+void binaryToHex(); 
+void main() { 
+clrscr(); 
+binaryToHex(); 
+getch(); 
+} 
+void binaryToHex() { 
+char binary[65]; 
+char hex[17]; 
+int i = 0, 
+j = 0, k = 0; 
+int decimalValue = 0; 
+int len; 
+int power; 
+printf("Enter a binary number: "); 
+scanf("%s", binary); 
+len = strlen(binary); 
+for (i = len - 1; i >= 0; i -= 4) { 
+decimalValue = 0; 
+power = 1;
+for (k = i; k > i - 4 && k >= 0; k--) { 
+if (binary[k] == '1') { 
+decimalValue += power; 
+} else if (binary[k] != '0') { 
+printf("\nError: Invalid binary digit '%c'.", binary[k]); 
+return; 
+}
+power = power * 2; 
+} 
+if (decimalValue < 10) 
+{
+hex[j] = decimalValue + '0'; 
+} else { 
+hex[j] = (decimalValue - 10) + 'A';
+} 
+j++; 
+} 
+hex[j] = '\0'; 
+printf("Hexadecimal equivalent: "); 
+for (i = j - 1; i >= 0; i--) {
+printf("%c", hex[i]); 
+} 
+printf("\n"); 
+}
