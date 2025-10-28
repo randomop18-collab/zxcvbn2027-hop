@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <string.h>
+
+#define BITS 8
+
+// Function to find the 2's complement of a binary string
+void twosComplement(char* binary) {
+    int len = strlen(binary);
+    char onesComplement[len + 1];
+    char twosComplement[len + 1];
+    int i;
+
+    // Find 1's complement
+    for (i = 0; i < len; i++) {
+        if (binary[i] == '0') {
+            onesComplement[i] = '1';
+        } else {
+            onesComplement[i] = '0';
+        }
+    }
+    onesComplement[len] = '\0';
+
+    // Find 2's complement by adding 1 to 1's complement
+    strcpy(twosComplement, onesComplement);
+    for (i = len - 1; i >= 0; i--) {
+        if (twosComplement[i] == '0') {
+            twosComplement[i] = '1';
+            break;
+        } else {
+            twosComplement[i] = '0';
+        }
+    }
+    if (i == -1) { // Overflow case
+        printf("2's Complement: 1%s\n", twosComplement);
+    } else {
+        printf("2's Complement: %s\n", twosComplement);
+    }
+}
+
+int main() {
+    char binary[BITS + 1];
+    printf("Enter an %d-bit binary number: ", BITS);
+    scanf("%s", binary);
+
+    if (strlen(binary) != BITS) {
+        printf("Invalid input. Please enter an %d-bit binary number.\n", BITS);
+        return 1;
+    }
+
+    printf("Original Binary: %s\n", binary);
+    twosComplement(binary);
+
+    return 0;
+}
