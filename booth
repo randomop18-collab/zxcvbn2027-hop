@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+void boothAlgorithm(int br, int qr) {
+    int ac = 0;
+    int qrn = 0;
+    int n = sizeof(int) * 8;
+
+    printf("br = %d, qr = %d\n", br, qr);
+
+    for (int i = 0; i < n; i++) {
+        int q0 = qr & 1;
+        if (q0 == 1 && qrn == 0) {
+            ac = ac - br;
+        } else if (q0 == 0 && qrn == 1) {
+            ac = ac + br;
+        }
+
+        // Arithmetic Right Shift
+        qrn = qr & 1;
+        qr = qr >> 1;
+        if (ac & 1) {
+            qr = qr | (1 << (n - 1));
+        }
+        ac = ac >> 1;
+    }
+
+    printf("Result = %d\n", qr);
+}
+
+int main() {
+    int multiplicand, multiplier;
+    printf("Enter multiplicand: ");
+    scanf("%d", &multiplicand);
+    printf("Enter multiplier: ");
+    scanf("%d", &multiplier);
+
+    boothAlgorithm(multiplicand, multiplier);
+
+    return 0;
+}
