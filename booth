@@ -1,40 +1,27 @@
-#include <stdio.h>
+#include <stdio.h> 
 
-void boothAlgorithm(int br, int qr) {
-    int ac = 0;
-    int qrn = 0;
-    int n = sizeof(int) * 8;
-
-    printf("br = %d, qr = %d\n", br, qr);
-
-    for (int i = 0; i < n; i++) {
-        int q0 = qr & 1;
-        if (q0 == 1 && qrn == 0) {
-            ac = ac - br;
-        } else if (q0 == 0 && qrn == 1) {
-            ac = ac + br;
-        }
-
-        // Arithmetic Right Shift
-        qrn = qr & 1;
-        qr = qr >> 1;
-        if (ac & 1) {
-            qr = qr | (1 << (n - 1));
-        }
-        ac = ac >> 1;
-    }
-
-    printf("Result = %d\n", qr);
-}
-
-int main() {
-    int multiplicand, multiplier;
-    printf("Enter multiplicand: ");
-    scanf("%d", &multiplicand);
-    printf("Enter multiplier: ");
-    scanf("%d", &multiplier);
-
-    boothAlgorithm(multiplicand, multiplier);
-
-    return 0;
+int main() { 
+    int A = 0, Q, M; int q_1 = 0; 
+    int count; long long result; 
+    
+    
+    printf("Enter multiplicand: "); 
+    scanf("%d", &M); 
+    printf("Enter multiplier: "); 
+    scanf("%d", &Q); 
+    
+    count = sizeof(int) * 8; 
+    while (count > 0) { 
+        if ((Q & 1) == 1 && q_1 == 0) { A = A - M; 
+        } else if ((Q & 1) == 0 && q_1 == 1){A = A + M; } q_1 = Q & 1;
+        Q = ((unsigned int)Q >> 1) | ((A & 1) << (sizeof(int) * 8 - 1)); 
+        A = A >> 1; 
+        count--; 
+        
+    } 
+    result = ((long long)A <<32) | (unsigned int)Q; 
+    printf("Product = %lld\n", result); 
+     
+    return 0; 
+    
 }
