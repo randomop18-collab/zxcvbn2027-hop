@@ -1,48 +1,59 @@
-.MODEL SMALL 
-.STACK 100H 
-
-.CODE 
-MAIN PROC 
-MOV AH, 00H 
-MOV AL, 13H 
-INT 10H 
-MOV CX,100 
-MOV DX,50 
-TOP_LINE: 
-MOV AH,0CH 
-MOV AL, 15 
-INT 10H 
-INC CX 
-CMP CX, 180 
-JNE TOP_LINE 
-MOV CX,100 
-MOV DX,129 
-BOTTOM_LINE: 
-MOV AH, 0CH 
-MOV AL, 15 
-INT 10H 
-INC CX
-CMP CX, 180 
-JNE BOTTOM_LINE 
-MOV CX,100 
-MOV DX,50 
-LEFT_LINE: 
-MOV AH, 0CH 
-MOV AL, 15 
-INT 10H 
-INC DX 
-CMP DX, 130 
-JNE LEFT_LINE 
-MOV CX,179
-MOV DX,50 
-RIGHT_LINE: 
-MOV AH, 0CH 
-MOV AL, 15 
-INT 10H 
-INC DX 
-CMP DX, 130 
-JNE RIGHT_LINE 
-MOV AH, 4CH 
-INT 21H 
-MAIN ENDP 
+.MODEL SMALL
+.CODE
+MAIN PROC
+    ; Set graphics mode
+    MOV AH, 00H
+    MOV AL, 13H         ; 320x200 mode
+    INT 10H
+    
+    MOV CX, 0           ; X = 0
+    
+DRAW:
+    ; Draw high line (horizontal)
+    MOV DX, 50          ; Y = 50 (high)
+    MOV BX, 20          ; 20 pixels wide
+L1: MOV AH, 0CH
+    MOV AL, 15          ; White color
+    INT 10H
+    INC CX
+    DEC BX
+    JNZ L1
+    
+    ; Draw vertical line going down
+    MOV BX, 50          ; 50 pixels down
+L3: MOV AH, 0CH
+    MOV AL, 15
+    INT 10H
+    INC DX              ; Move Y down
+    DEC BX
+    JNZ L3
+    
+    ; Draw low line (horizontal)
+    MOV BX, 20          ; 20 pixels wide
+L2: MOV AH, 0CH
+    MOV AL, 15
+    INT 10H
+    INC CX              ; Move X right
+    DEC BX
+    JNZ L2
+    
+    ; Draw vertical line going up
+    MOV BX, 50          ; 50 pixels up
+L4: MOV AH, 0CH
+    MOV AL, 15
+    INT 10H
+    DEC DX              ; Move Y up
+    DEC BX
+    JNZ L4
+    
+    CMP CX, 300         ; Repeat until X = 300
+    JL DRAW
+    
+    ; Wait and exit
+    MOV AH, 00H
+    INT 16H             ; Wait for key
+    
+    MOV AH, 4CH
+    INT 21H
+MAIN ENDP
 END MAIN
