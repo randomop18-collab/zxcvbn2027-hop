@@ -64,8 +64,7 @@ int main() {
             decimalToBinary(dec);
             break;
         case 2:
-            printf("Enter a hexadecimal number: 
-");
+            printf("Enter a hexadecimal number: ");
             scanf("%s", hex);
             hexadecimalToBinary(hex);
             break;
