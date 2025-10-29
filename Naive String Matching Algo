@@ -10,15 +10,20 @@ void naiveStringMatch(char *txt, char *pat) {
         for (j = 0; j < M; j++)
             if (txt[i + j] != pat[j])
                 break;
-
         if (j == M)
             printf("Pattern found at index %d\n", i);
     }
 }
 
 int main() {
-    char txt[] = "ABABDABACDABABCABAB";
-    char pat[] = "ABABCABAB";
+    char txt[100], pat[50];
+
+    printf("Enter the text: ");
+    scanf("%[^\n]%*c", txt);
+
+    printf("Enter the pattern: ");
+    scanf("%[^\n]%*c", pat);
+
     naiveStringMatch(txt, pat);
     return 0;
 }
