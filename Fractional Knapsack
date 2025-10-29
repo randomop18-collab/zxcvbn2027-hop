@@ -1,0 +1,56 @@
+#include <stdio.h>
+
+typedef struct {
+    int value;
+    int weight;
+} Item;
+
+void fractionalKnapsack(int W, Item arr[], int n) {
+    float x[n], totalValue = 0;
+    int i, j;
+    int currentWeight = 0;
+
+    // Calculate ratios and sort items by value/weight ratio
+    for(i = 0; i < n; i++)
+        x[i] = 0.0;
+
+    // Sorting items based on value/weight ratio (simple bubble sort for demonstration)
+    for (i = 0; i < n - 1; i++) {
+        for (j = i + 1; j < n; j++) {
+            float r1 = (float)arr[i].value / arr[i].weight;
+            float r2 = (float)arr[j].value / arr[j].weight;
+            if (r1 < r2) {
+                Item temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
+
+    for (i=0; i<n; i++) {
+        if (arr[i].weight <= W - currentWeight) {
+            x[i] = 1.0;
+            currentWeight += arr[i].weight;
+            totalValue += arr[i].value;
+        } else {
+            x[i] = (float)(W - currentWeight) / arr[i].weight;
+            totalValue += x[i] * arr[i].value;
+            break;
+        }
+    }
+
+    printf("Items included in knapsack:\n");
+    for (i=0; i<n; i++)
+        if(x[i] > 0)
+            printf("Item %d: %f fraction\n", i+1, x[i]);
+
+    printf("Total value: %f\n", totalValue);
+}
+
+int main() {
+    int W = 50;  // Capacity of knapsack
+    Item arr[] = {{60, 10}, {100, 20}, {120, 30}};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    fractionalKnapsack(W, arr, n);
+    return 0;
+}
