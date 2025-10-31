@@ -1,0 +1,25 @@
+Prac 10 : JavaScript Program – Simple Login Page 
+
+File name : login.html 
+
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <title>Login Page</title> 
+        <script> 
+        function validate() {    
+            let user = document.getElementById("user").value;    
+            let pass = document.getElementById("pass").value;    
+            if (user === "admin" && pass === "1234")        
+                alert("Login Successful!");    
+            else        
+                alert("Invalid username or password!"); } 
+        </script> 
+    </head> 
+    <body> 
+        <h2>Login Form</h2> 
+            Username: <input type="text" id="user"><br><br> 
+            Password: <input type="password" id="pass"><br><br>
+            <button onclick="validate()">Login</button> 
+    </body> 
+</html>
